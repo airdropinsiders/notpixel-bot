@@ -1,206 +1,199 @@
-import { Config } from './config/config.js';
-import { proxyList } from './config/proxy_list.js';
-import { Core } from './src/core/core.js';
-import { Telegram } from './src/core/telegram.js';
-import { Helper } from './src/utils/helper.js';
-import a0_0x181001 from './src/utils/logger.js';
-import a0_0x375d88 from './src/utils/twist.js';
-async function operation(_0x7206ff, _0x3acd21, _0x59ae82, _0x51f8a7) {
-  try {
-    const _0x340d14 = new Core(_0x7206ff, _0x3acd21, _0x59ae82, _0x51f8a7);
-    const _0x158c1c = Helper.random(0x0, 0x7530);
-    await Helper.delay(_0x158c1c, _0x7206ff, "Random Delay " + Helper.msToTime(_0x158c1c) + ", To Make Sure All Account Not Draw On Same pixel...", _0x340d14);
-    const _0x469b33 = Config.REPAINTER ?? true;
-    await _0x340d14.getMiningStatus(true);
-    await _0x340d14.checkUserSelectedTemplate();
-    while (_0x340d14.mining.charges != 0x0) {
-      if (_0x469b33 == true) {
-        let _0x2e75a1;
-        if (_0x340d14.found == false) {
-          if (_0x340d14.template) {
-            const _0x5e3bda = await _0x340d14.getRandomPixelFromCoverage(0x1d01d, 0x37e1a);
-            _0x2e75a1 = [..._0x5e3bda];
-            for (const _0x27b932 of _0x2e75a1) {
-              await Helper.delay(0x0, _0x7206ff, "Searching on Template Area...", _0x340d14);
-              await _0x340d14.checkPixel(_0x27b932, "#FFB470");
-              if (_0x340d14.found == true) {
-                await _0x340d14.startPainting(_0x27b932, "#FFB470");
+  import { Config } from './config/config.js';
+  import { proxyList } from './config/proxy_list.js';
+  import { Core } from './src/core/core.js';
+  import { Telegram } from './src/core/telegram.js';
+  import { Bless } from './src/utils/bless.js';
+  import { Helper } from './src/utils/helper.js';
+  import a0_0x1b772f from './src/utils/logger.js';
+  async function operation(_0x18b390, _0x2de650, _0x24062a, _0x4096e1) {
+    const _0x2e9bb5 = new Core(_0x18b390, _0x2de650, _0x24062a, _0x4096e1);
+    try {
+      const _0x533bfd = Config.REPAINTER ?? true;
+      const _0x171d77 = Config.TEMPLATE ?? {
+        'templateID': 0x4decc265,
+        'startArea': 0x1d921,
+        'endArea': 0x26600,
+        'correctColor': '#00CC78'
+      };
+      await _0x2e9bb5.getUserInfo(true);
+      await _0x2e9bb5.getMiningStatus(true);
+      await _0x2e9bb5.checkUserSelectedTemplate(_0x171d77.templateID);
+      const _0x30cd12 = Helper.random(0x0, 0x7530);
+      await Helper.delay(_0x30cd12, _0x18b390, "Random Delay " + Helper.msToTime(_0x30cd12) + ", To Make Sure All Account Not Draw On Same pixel...", _0x2e9bb5);
+      while (_0x2e9bb5.mining.charges != 0x0) {
+        if (_0x533bfd == true) {
+          let _0x342c35;
+          if (_0x2e9bb5.found == false) {
+            if (_0x2e9bb5.template) {
+              const _0xf324b9 = await _0x2e9bb5.getRandomPixelFromCoverage(_0x171d77.startArea + Helper.random(0x1, 0x14), _0x171d77.endArea);
+              _0x342c35 = [..._0xf324b9];
+              for (const _0x5194ca of _0x342c35) {
+                await Helper.delay(0x0, _0x18b390, "Searching on Template Area...", _0x2e9bb5);
+                await _0x2e9bb5.checkPixel(_0x5194ca, _0x171d77.correctColor);
+                if (_0x2e9bb5.found == true) {
+                  await _0x2e9bb5.startPainting(_0x5194ca, _0x171d77.correctColor);
+                  break;
+                }
+              }
+            } else {
+              await _0x2e9bb5.selectTemplate();
+            }
+          }
+          if (_0x2e9bb5.found == false) {
+            await Helper.delay(0x3e8, _0x18b390, "Selecting a Global Template...", _0x2e9bb5);
+            await Helper.delay(0xbb8, _0x18b390, "Finding incorrect pixels colors from coverage Area 1...", _0x2e9bb5);
+            const _0x3f5e8b = await _0x2e9bb5.getRandomPixelFromCoverage(0x4108e, 0x49180);
+            const _0x4b713b = await _0x2e9bb5.getRandomPixelFromCoverage(0x4bc16, 0x53d08);
+            _0x342c35 = [..._0x3f5e8b, ..._0x4b713b];
+            for (const _0x45c34a of _0x342c35) {
+              await Helper.delay(0x0, _0x18b390, "Searching on Area 1...", _0x2e9bb5);
+              await _0x2e9bb5.checkPixel(_0x45c34a, "#00756F");
+              if (_0x2e9bb5.found == true) {
+                await _0x2e9bb5.startPainting(_0x45c34a, "#00756F");
                 break;
               }
             }
-          } else {
-            await _0x340d14.selectTemplate();
           }
-        }
-        if (_0x340d14.found == false) {
-          await Helper.delay(0x3e8, _0x7206ff, "Selecting a Global Template...", _0x340d14);
-          await Helper.delay(0xbb8, _0x7206ff, "Finding incorrect pixels colors from coverage Area 1...", _0x340d14);
-          const _0xef621d = await _0x340d14.getRandomPixelFromCoverage(0x4108e, 0x49180);
-          const _0x2873d2 = await _0x340d14.getRandomPixelFromCoverage(0x4bc16, 0x53d08);
-          _0x2e75a1 = [..._0xef621d, ..._0x2873d2];
-          for (const _0x17895b of _0x2e75a1) {
-            await Helper.delay(0x0, _0x7206ff, "Searching on Area 1...", _0x340d14);
-            await _0x340d14.checkPixel(_0x17895b, "#00756F");
-            if (_0x340d14.found == true) {
-              await _0x340d14.startPainting(_0x17895b, "#00756F");
-              break;
-            }
+          if (_0x2e9bb5.found == false) {
+            const _0x2dedaa = Helper.random(0x0, _0x342c35.length);
+            await _0x2e9bb5.startPainting(_0x342c35[_0x2dedaa], '#00756F');
           }
-        }
-        if (_0x340d14.found == false) {
-          const _0x378fb5 = Helper.random(0x0, _0x2e75a1.length);
-          await _0x340d14.startPainting(_0x2e75a1[_0x378fb5], "#00756F");
-        }
-        _0x340d14.found = false;
-      } else {
-        const _0x4fa408 = Helper.random(0x1, 0xf4240);
-        await _0x340d14.startPainting(_0x4fa408);
-      }
-    }
-    await _0x340d14.claimMining();
-    const _0x145206 = Config.USEAUTOUPGRADE ?? true;
-    if (_0x145206) {
-      if (_0x340d14.mining.boosts.reChargeSpeed != 0x7) {
-        await _0x340d14.upgrade("reChargeSpeed");
-      }
-      if (_0x340d14.mining.boosts.paintReward != 0xb) {
-        await _0x340d14.upgrade("paintReward");
-      }
-      if (_0x340d14.mining.boosts.energyLimit != 0x7) {
-        await _0x340d14.upgrade("energyLimit");
-      }
-    }
-    const _0x4be857 = Config.MODE ?? 0x2;
-    const _0x85af8d = Helper.random(0xbb8, 0x2710);
-    const _0x3ed89c = Config.CUSTOMDELAYINMIN ? Config.CUSTOMDELAYINMIN * 0xea60 : undefined;
-    if (_0x4be857 == 0x2) {
-      await Helper.delay(_0x3ed89c ? _0x3ed89c : _0x85af8d + _0x340d14.mining.reChargeTimer, _0x7206ff, "Account " + _0x7206ff.id + " Processing Complete, Restarting in " + Helper.msToTime(_0x85af8d + _0x340d14.mining.reChargeTimer), _0x340d14);
-      await operation(_0x7206ff, _0x3acd21, _0x59ae82, _0x51f8a7);
-    } else {
-      await Helper.delay(0x2710, _0x7206ff, "Account " + _0x7206ff.id + " Processing Complete, Continue Using next account in 10 Seconds", _0x340d14);
-      await a0_0x375d88.clear(_0x7206ff);
-    }
-  } catch (_0x49344f) {
-    if (_0x49344f.message.includes("401")) {
-      if (_0x7206ff.type == 'query') {
-        await Helper.delay(0x3e8, _0x7206ff, "Error : " + _0x49344f.message + ", Query Is Expired, Please Get New Query");
-      } else {
-        await Helper.delay(0x1388, _0x7206ff, "Error : " + _0x49344f.message + ", Query Is Expired, Getting New Query in 5 Seconds");
-        const _0x41e1db = new Telegram();
-        await _0x41e1db.useSession(_0x7206ff.accounts, _0x51f8a7);
-        const _0xdf0396 = await _0x41e1db.client.getMe();
-        _0xdf0396.type = "sessions";
-        _0xdf0396.accounts = _0x7206ff.accounts;
-        _0xdf0396.id = _0xdf0396.id.value;
-        const _0x172794 = await _0x41e1db.resolvePeer(_0xdf0396).then(async () => {
-          return await _0x41e1db.initWebView();
-        })["catch"](_0x36959c => {
-          throw _0x36959c;
-        });
-        const _0x304bdd = Helper.queryToJSON(_0x172794);
-        await _0x41e1db.disconnect();
-        await Helper.delay(0x1388, _0xdf0396, "Successfully get new query");
-        await operation(_0xdf0396, _0x172794, _0x304bdd, _0x51f8a7);
-      }
-    } else {
-      await Helper.delay(0x1388, _0x7206ff, "Error : " + _0x49344f.message + ", Retrying after 5 Seconds");
-      await operation(_0x7206ff, _0x3acd21, _0x59ae82, _0x51f8a7);
-    }
-  }
-}
-let init = false;
-async function startBot() {
-  return new Promise(async (_0x273b87, _0x34f42a) => {
-    try {
-      a0_0x181001.info("BOT STARTED");
-      const _0x283e79 = await new Telegram();
-      if (init == false) {
-        await _0x283e79.init();
-        init = true;
-      }
-      const _0x45d66f = Helper.getSession("accounts");
-      const _0x16bc17 = [];
-      if (proxyList.length > 0x0) {
-        if (_0x45d66f.length != proxyList.length) {
-          _0x34f42a("You have " + _0x45d66f.length + " Session but you provide " + proxyList.length + " Proxy");
-        }
-      }
-      for (const _0x2ffea1 of _0x45d66f) {
-        const _0x21a5b3 = _0x45d66f.indexOf(_0x2ffea1);
-        const _0x133cf2 = proxyList.length > 0x0 ? proxyList[_0x21a5b3] : undefined;
-        if (!_0x2ffea1.includes("query")) {
-          await _0x283e79.useSession("accounts/" + _0x2ffea1, _0x133cf2);
-          _0x283e79.session = _0x2ffea1;
-          const _0xcd5c5d = await _0x283e79.client.getMe();
-          _0xcd5c5d.type = "sessions";
-          _0xcd5c5d.accounts = 'accounts/' + _0x2ffea1;
-          _0xcd5c5d.id = _0xcd5c5d.id.value;
-          const _0x4ae53c = await _0x283e79.resolvePeer(_0xcd5c5d).then(async () => {
-            return await _0x283e79.initWebView();
-          })['catch'](_0x1bbaaa => {
-            throw _0x1bbaaa;
-          });
-          const _0x23aadf = Helper.queryToJSON(_0x4ae53c);
-          await _0x283e79.disconnect();
-          _0x16bc17.push([_0xcd5c5d, _0x4ae53c, _0x23aadf, _0x133cf2]);
+          _0x2e9bb5.found = false;
         } else {
-          let _0xccab7a = Helper.readQueryFile("accounts/" + _0x2ffea1 + "/query.txt");
-          let _0x175245 = Helper.queryToJSON(_0xccab7a);
-          if (!_0x175245.user) {
-            _0x175245 = await Helper.queryToJSON(await Helper.launchParamToQuery(_0xccab7a));
-            _0xccab7a = await Helper.launchParamToQuery(_0xccab7a);
-          }
-          const _0x1666c9 = _0x175245.user;
-          _0x1666c9.type = "query";
-          _0x1666c9.firstName = _0x1666c9.first_name;
-          _0x1666c9.lastName = _0x1666c9.last_name;
-          _0x16bc17.push([_0x1666c9, _0xccab7a, _0x175245, _0x133cf2]);
+          const _0x1a762e = Helper.random(0x1, 0xf4240);
+          await _0x2e9bb5.startPainting(_0x1a762e);
         }
       }
-      const _0xe85b50 = Config.MODE ?? 0x2;
-      if (_0xe85b50 == 0x2) {
-        const _0x103e45 = _0x16bc17.map(async _0x403e3f => {
-          await operation(_0x403e3f[0x0], _0x403e3f[0x1], _0x403e3f[0x2], _0x403e3f[0x3]);
-        });
-        await Promise.all(_0x103e45);
+      await _0x2e9bb5.claimMining();
+      const _0x2e8afa = Config.USEAUTOUPGRADE ?? true;
+      if (_0x2e8afa) {
+        if (_0x2e9bb5.mining.boosts.reChargeSpeed != 0x7) {
+          await _0x2e9bb5.upgrade('reChargeSpeed');
+        }
+        if (_0x2e9bb5.mining.boosts.paintReward != 0xb) {
+          await _0x2e9bb5.upgrade('paintReward');
+        }
+        if (_0x2e9bb5.mining.boosts.energyLimit != 0x7) {
+          await _0x2e9bb5.upgrade('energyLimit');
+        }
+      }
+      const _0x404981 = Helper.random(0xbb8, 0x2710);
+      const _0x4968ba = Config.CUSTOMDELAYINMIN ? Config.CUSTOMDELAYINMIN * 0xea60 : undefined;
+      await Helper.delay(_0x4968ba ? _0x4968ba : _0x404981 + _0x2e9bb5.mining.reChargeTimer, _0x18b390, "Account " + _0x18b390.id + " Processing Complete, Restarting in " + Helper.msToTime(_0x404981 + _0x2e9bb5.mining.reChargeTimer), _0x2e9bb5);
+      await operation(_0x18b390, _0x2de650, _0x24062a, _0x4096e1);
+    } catch (_0x360e07) {
+      if (_0x360e07.message.includes('401')) {
+        if (_0x18b390.type == 'query') {
+          await Helper.delay(0x3e8, _0x18b390, "Error : " + _0x360e07.message + ", Query Is Expired, Please Get New Query", _0x2e9bb5);
+        } else {
+          await Helper.delay(0x1388, _0x18b390, "Error : " + _0x360e07.message + ", Query Is Expired, Getting New Query in 5 Seconds", _0x2e9bb5);
+          const _0x3c87ca = new Telegram();
+          await _0x3c87ca.useSession(_0x18b390.accounts, _0x4096e1);
+          const _0x339754 = await _0x3c87ca.client.getMe();
+          _0x339754.type = 'sessions';
+          _0x339754.accounts = _0x18b390.accounts;
+          _0x339754.id = _0x339754.id.value;
+          let _0xcaacc = await _0x3c87ca.resolvePeer(_0x339754).then(async () => {
+            return await _0x3c87ca.initWebView(_0x339754);
+          })["catch"](_0x58898e => {
+            throw _0x58898e;
+          });
+          const _0x20fd74 = Helper.queryToJSON(_0xcaacc);
+          await _0x3c87ca.disconnect();
+          await Helper.delay(0x1388, _0x339754, "Successfully get new query", _0x2e9bb5);
+          await operation(_0x339754, _0xcaacc, _0x20fd74, _0x4096e1);
+        }
       } else {
-        while (true) {
-          for (const _0x23e121 of _0x16bc17) {
-            await operation(_0x23e121[0x0], _0x23e121[0x1], _0x23e121[0x2], _0x23e121[0x3]);
-          }
-          const _0x177329 = Config.CUSTOMDELAYINMIN ? Config.CUSTOMDELAYINMIN * 0xea60 : undefined;
-          await Helper.delay(_0x177329 ? _0x177329 : 600000, undefined, "All Account Processing Complete");
-          await a0_0x375d88.clearInfo();
-          conosole.log();
-          conosole.log();
-          conosole.log("-> New Iteration");
+        if (_0x360e07.message.includes('API')) {
+          await Helper.delay(0x1388, _0x18b390, "Error : " + _0x360e07.message + ", Exiting bot...", _0x2e9bb5);
+          await process.exit();
+        } else {
+          await Helper.delay(0x1388, _0x18b390, "Error : " + _0x360e07.message + ", Retrying after 5 Seconds", _0x2e9bb5);
+          await operation(_0x18b390, _0x2de650, _0x24062a, _0x4096e1);
         }
       }
-      _0x273b87();
-    } catch (_0x54580a) {
-      a0_0x181001.info("BOT STOPPED");
-      a0_0x181001.error(JSON.stringify(_0x54580a));
-      _0x34f42a(_0x54580a);
     }
-  });
-}
-(async () => {
-  try {
-    a0_0x181001.clear();
-    a0_0x181001.info('');
-    a0_0x181001.info("Application Started");
-    console.log("Not Pixel BOT");
-    console.log();
-    console.log("Join Channel : https://t.me/AirdropInsiderID");
-    console.log("Dont forget to run git pull to keep up to date");
-    console.log();
-    console.log();
-    Helper.showSkelLogo();
-    await startBot();
-  } catch (_0x362885) {
-    await a0_0x375d88.clear();
-    await a0_0x375d88.clearInfo();
-    console.log("Error During executing bot", _0x362885);
-    await startBot();
   }
-})();
+  let init = false;
+  async function startBot() {
+    return new Promise(async (_0x2c4875, _0x5161e1) => {
+      try {
+        a0_0x1b772f.info("BOT STARTED");
+        const _0x54038b = await new Telegram();
+        if (init == false) {
+          await _0x54038b.init();
+          init = true;
+        }
+        const _0x1ec4e3 = Helper.getSession('accounts');
+        const _0x1b7be9 = [];
+        if (proxyList.length > 0x0) {
+          if (_0x1ec4e3.length != proxyList.length) {
+            _0x5161e1("You have " + _0x1ec4e3.length + " Session but you provide " + proxyList.length + " Proxy");
+          }
+        }
+        for (const _0x5bd0cb of _0x1ec4e3) {
+          const _0xc66a46 = _0x1ec4e3.indexOf(_0x5bd0cb);
+          const _0x5687de = proxyList.length > 0x0 ? proxyList[_0xc66a46] : undefined;
+          if (!_0x5bd0cb.includes("query")) {
+            await _0x54038b.useSession('accounts/' + _0x5bd0cb, _0x5687de);
+            _0x54038b.session = _0x5bd0cb;
+            const _0x55b713 = await _0x54038b.client.getMe();
+            _0x55b713.type = "sessions";
+            _0x55b713.accounts = 'accounts/' + _0x5bd0cb;
+            _0x55b713.id = _0x55b713.id.value;
+            let _0xffe6b6 = await _0x54038b.resolvePeer(_0x55b713).then(async () => {
+              return await _0x54038b.initWebView(_0x55b713);
+            })["catch"](_0x4df31b => {
+              throw _0x4df31b;
+            });
+            const _0x1f0e81 = Helper.queryToJSON(_0xffe6b6);
+            await _0x54038b.disconnect();
+            _0x1b7be9.push([_0x55b713, _0xffe6b6, _0x1f0e81, _0x5687de]);
+          } else {
+            let _0x5d918f = Helper.readQueryFile("accounts/" + _0x5bd0cb + '/query.txt');
+            let _0x348133 = Helper.queryToJSON(_0x5d918f);
+            if (!_0x348133.user) {
+              _0x348133 = await Helper.queryToJSON(await Helper.launchParamToQuery(_0x5d918f));
+              _0x5d918f = await Helper.launchParamToQuery(_0x5d918f);
+            }
+            const _0x1ed122 = _0x348133.user;
+            _0x1ed122.type = 'query';
+            _0x1ed122.firstName = _0x1ed122.first_name;
+            _0x1ed122.lastName = _0x1ed122.last_name;
+            _0x1b7be9.push([_0x1ed122, _0x5d918f, _0x348133, _0x5687de]);
+          }
+        }
+        if (Config.DISPLAY != "TWIST") {
+          Helper.twist = new Bless();
+        }
+        const _0xc9a094 = _0x1b7be9.map(async _0x5dbf8a => {
+          await operation(_0x5dbf8a[0x0], _0x5dbf8a[0x1], _0x5dbf8a[0x2], _0x5dbf8a[0x3]);
+        });
+        await Promise.all(_0xc9a094);
+        _0x2c4875();
+      } catch (_0x20516e) {
+        a0_0x1b772f.info("BOT STOPPED");
+        a0_0x1b772f.error(JSON.stringify(_0x20516e));
+        _0x5161e1(_0x20516e);
+      }
+    });
+  }
+  (async () => {
+    try {
+      a0_0x1b772f.clear();
+      a0_0x1b772f.info('');
+      a0_0x1b772f.info("Application Started");
+      console.log("Not Pixel BOT");
+      console.log();
+      console.log("By : AirdropInsider");
+      console.log("Join Channel : https://t.me/AirdropInsiderID");
+      console.log("Dont forget to run git pull to keep up to date");
+      console.log();
+      console.log();
+      Helper.showSkelLogo();
+      await startBot();
+    } catch (_0x5aa488) {
+      console.log("Error During executing bot", _0x5aa488);
+      await startBot();
+    }
+  })();

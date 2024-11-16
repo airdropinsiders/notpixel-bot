@@ -1,83 +1,72 @@
-import a1_0x58814f from 'axios';
-import { HttpsProxyAgent } from 'https-proxy-agent';
-import { Helper } from '../utils/helper.js';
-import a1_0x75a729 from '../utils/logger.js';
-export class API {
-  constructor(_0x371ac7, _0xb04b6e, _0x3ed4e8, _0x18106d, _0x1d04d7, _0x1c2733) {
-    this.url = _0x3ed4e8;
-    this.host = _0x18106d;
-    this.origin = _0x1d04d7;
-    this.referer = _0x1c2733;
-    this.ua = Helper.randomUserAgent();
-    this.query = _0x371ac7;
-    this.proxy = _0xb04b6e;
-    this.axiosInstance = a1_0x58814f.create({
-      'baseURL': _0x3ed4e8,
-      'headers': this.generateHeaders()
-    });
-  }
-  ["generateHeaders"](_0x11d649 = this.query) {
-    const _0x1c8784 = {
-      'Accept': "application/json, text/plain, */*",
-      'Accept-Language': 'en-US,en;q=0.9,id;q=0.8',
-      'Content-Type': 'application/json',
-      'Sec-Fetch-Dest': "empty",
-      'Sec-Fetch-Site': "same-site",
-      'Sec-Fetch-Mode': 'cors',
-      'User-Agent': this.ua,
-      'Host': this.host,
-      'Origin': this.origin,
-      'Referer': this.referer
-    };
-    if (_0x11d649) {
-      _0x1c8784.Authorization = "Initdata " + _0x11d649;
+  import a1_0x77497f from 'axios';
+  import { HttpsProxyAgent } from 'https-proxy-agent';
+  import { Helper } from '../utils/helper.js';
+  import a1_0x576e49 from '../utils/logger.js';
+  export class API {
+    constructor(_0x1d07bf, _0x2d7b72, _0x1c56b3) {
+      this.url = _0x1c56b3;
+      this.ua = Helper.randomUserAgent();
+      this.query = _0x1d07bf;
+      this.proxy = _0x2d7b72;
+      this.axiosInstance = a1_0x77497f.create({
+        'baseURL': _0x1c56b3,
+        'headers': this.generateHeaders()
+      });
     }
-    return _0x1c8784;
-  }
-  async ['fetch'](_0x2fd811, _0x29e2a4 = "GET", _0x3884dc, _0x17e0ef = {}, _0x31e9de = {}) {
-    try {
-      const _0x59296b = '' + this.url + _0x2fd811;
-      const _0x19f463 = {
-        ..._0x31e9de,
-        ...this.generateHeaders(_0x3884dc)
+    ['generateHeaders'](_0x50afae = this.query) {
+      const _0x239cec = {
+        'Accept': "application/json, text/plain, */*",
+        'Accept-Language': 'en-US,en;q=0.9,id;q=0.8',
+        'Content-Type': 'application/json',
+        'User-Agent': this.ua
       };
-      a1_0x75a729.info(_0x29e2a4 + " : " + _0x59296b + " " + (this.proxy ? this.proxy : ''));
-      a1_0x75a729.info("Request Header : " + JSON.stringify(_0x19f463));
-      const _0x35966b = {
-        'method': _0x29e2a4,
-        'url': _0x59296b,
-        'headers': _0x19f463
-      };
-      if (this.proxy) {
-        _0x35966b.httpsAgent = new HttpsProxyAgent(this.proxy);
+      if (_0x50afae) {
+        _0x239cec.Authorization = "initData " + _0x50afae;
       }
-      if (_0x29e2a4 !== "GET") {
-        _0x35966b.data = _0x17e0ef;
-        a1_0x75a729.info("Request Body : " + JSON.stringify(_0x17e0ef));
-      }
-      const _0x3f429b = await this.axiosInstance.request(_0x35966b);
-      a1_0x75a729.info("Response : " + _0x3f429b.status + " " + _0x3f429b.statusText);
-      const _0x360b1f = {
-        'status': _0x3f429b.status,
-        ..._0x3f429b.data
-      };
-      a1_0x75a729.info("Response Data : " + JSON.stringify(_0x360b1f));
-      return _0x360b1f;
-    } catch (_0x197f1f) {
-      a1_0x75a729.error("Error : " + _0x197f1f.message);
-      if (_0x197f1f.status == 0x193) {
-        return {
-          'status': 0x193,
-          ..._0x197f1f.response.data
+      return _0x239cec;
+    }
+    async ['fetch'](_0x4052b6, _0x5afa49 = 'GET', _0x64d08, _0x3ba646 = {}, _0x4eddf7 = {}) {
+      try {
+        const _0x1a7561 = '' + this.url + _0x4052b6;
+        const _0x432b11 = {
+          ..._0x4eddf7,
+          ...this.generateHeaders(_0x64d08)
         };
-      }
-      if (_0x197f1f.status == 0x194) {
-        return {
-          'status': 0x194,
-          ..._0x197f1f.response.data
+        a1_0x576e49.info(_0x5afa49 + " : " + _0x1a7561 + " " + (this.proxy ? this.proxy : ''));
+        a1_0x576e49.info("Request Header : " + JSON.stringify(_0x432b11));
+        const _0x572ea7 = {
+          'method': _0x5afa49,
+          'url': _0x1a7561,
+          'headers': _0x432b11
         };
+        if (this.proxy) {
+          _0x572ea7.httpsAgent = new HttpsProxyAgent(this.proxy);
+        }
+        if (_0x5afa49 !== 'GET') {
+          _0x572ea7.data = _0x3ba646;
+          a1_0x576e49.info("Request Body : " + JSON.stringify(_0x3ba646));
+        }
+        const _0xf2eb72 = await this.axiosInstance.request(_0x572ea7);
+        a1_0x576e49.info("Response : " + _0xf2eb72.status + " " + _0xf2eb72.statusText);
+        const _0x54d4b0 = {
+          'status': _0xf2eb72.status,
+          ..._0xf2eb72.data
+        };
+        a1_0x576e49.info("Response Data : " + JSON.stringify(_0x54d4b0));
+        return _0x54d4b0;
+      } catch (_0x30e63f) {
+        a1_0x576e49.error("Error : " + _0x30e63f.message);
+        if (_0x30e63f.status == 0x193) {
+          return {
+            'status': 0x193,
+            ..._0x30e63f.response.data
+          };
+        }
+        if (_0x30e63f.status == 0x1f7 || _0x30e63f.status == 0x194) {
+          throw Error("Detect API change Stopping BOT..");
+        } else {
+          throw _0x30e63f;
+        }
       }
-      throw _0x197f1f;
     }
   }
-}
